@@ -56,6 +56,66 @@ def binary(array, key):
 print binary(array, key)
 
 
+class Element(object):
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+        
+class LinkedList(object):
+    def __init__(self, head=None):
+        self.head = head
+
+    def append(self, new_element):
+        """adds element to end of a list"""
+        current = self.head
+        if self.head:
+            while current.next:
+                current = current.next
+            current.next = new_element
+        else:
+            self.head = new_element
+
+    def list_print(self):
+        """prints a linked list"""
+        thing = self.head
+        blank = []
+        while thing:
+            blank.append(thing.value)
+            thing = thing.next
+        print blank
+
+
+def reverse_single_ll(ll):
+    """
+    Takes as input a linked list object composed of element objects e.g.
+    [[3, 21, 4], ['daf', 34], ['paf', 'fa', (65, 5)], ('saf', 'dasf', 23), Null]
+    list_to_do points to the start of the remaining list following the head e.g.
+    [['daf', 34], ['paf', 'fa', (65, 5)], ['saf', 'dasf', 23], [Null]]
+    reversed_list starts as head and points to null value e.g. [[3,21,4],Null]
+    temp starts as list_to_do e.g. ['daf', 34] and points to end of start list.
+    list_to_do then moves one further e.g. ['paf', 'fa', (65, 5)],
+    temp.next becomes head e.g. [[3,21,4], null], reversed_list becomes temp
+    taking temp.next into consideration e.g. ['daf',34],[3,21,4][null]
+    Runtime complexity is Linear, O(n). Memory complexity is constant, O(1)
+    
+    """
+    head = ll.head 
+    if head == None or head.next == None:
+        return head
+
+    list_to_do = head.next 
+    reversed_list = head 
+    reversed_list.next = None
+
+    while list_to_do != None:
+        temp = list_to_do 
+        list_to_do = list_to_do.next                        
+        temp.next = reversed_list
+        reversed_list = temp
+    return reversed_list
+
+
 
 
 
