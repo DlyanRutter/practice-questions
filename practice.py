@@ -1,6 +1,10 @@
 import numpy as np
 
-class Arrays(object):
+
+class Array(object):
+    """
+    used to manipulate arrays
+    """
     def __init__(self, array):
         self.array = array
 
@@ -18,8 +22,6 @@ class Arrays(object):
         high_index = len(self.array) - 1
 
         while low_index <= high_index:
-
-            #python rounds down
             mid_index = low_index + ((high_index - low_index) / 2)
 
             if self.array[mid_index] == key:
@@ -29,40 +31,22 @@ class Arrays(object):
                 high_index = mid_index - 1
             else:
                 low_index = mid_index + 1
-
         return -1
-
-array = [1, 10, 20, 47, 59, 63, 77, 88, 99, 111]
-key = 77
-
-
-def binary(array, key):
-    low = 0
-    high = len(array) - 1
-
-    while low<=high:
-        mid = low + (high - low) / 2
-
-        if array[mid] == key:
-            return mid
-
-        if key < array[mid]:
-            high = mid - 1
-
-        else:
-            low = mid + 1
-    return -1
-
-print binary(array, key)
 
 
 class Element(object):
+    """
+    used to set up individual linked list node objects
+    """
     def __init__(self, value):
         self.value = value
         self.next = None
 
-        
+
 class LinkedList(object):
+    """
+    used to set up linked lists
+    """
     def __init__(self, head=None):
         self.head = head
 
@@ -114,13 +98,35 @@ def reverse_single_ll(ll):
         temp.next = reversed_list
         reversed_list = temp
     return reversed_list
+       
+def test_Array():
+    """
+    tests array class functions
+    """
+    array = [1, 10, 20, 47, 59, 63, 77, 88, 99, 111]
+    key = 77
+    array = Array(array)
+    print array.binary_search(key)
+    
+def test_LinkedList():
+    """
+    tests LinkedList class functions
+    """
+    ll = LinkedList()
 
+    #a, b, c, d ARE EACH ONE INSTANCE OF ELEMENT CLASS
+    a = Element([3,21,4])
+    b = Element(['daf', 34])
+    c = Element(['paf', 'fa', (65, 5)])
+    d = Element(('saf','dasf',23))
 
+    #APPENDING INSTANCES ABC FROM CLASS ELEMENT TO A SINGLE LINKED LIST INSTANCE
+    q = [a,b,c,d]
+    for e in q:
+        ll.append(e)
 
+    x = reverse_single_ll(ll)
+    y = [x.value, x.next.value, x.next.next.value, x.next.next.next.value]
+    print y
 
-
-
-
-
-
-
+#test_LinkedList()
