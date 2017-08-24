@@ -98,7 +98,29 @@ def reverse_single_ll(ll):
         temp.next = reversed_list
         reversed_list = temp
     return reversed_list
-       
+
+def remove_duplicates(ll):
+    """
+    remove objects with values that are already present in a linked list
+    """
+    head = ll.head
+    if head == None or head.next == None:
+        return head
+
+    exists = set()
+    exists.add(head.value)
+    current = head
+    
+    while current.next != None:
+        
+        if current.next.value in exists:
+            current.next = current.next.next
+        else:
+            exists.add((current.next.value))
+            current = current.next
+
+   return current
+
 def test_Array():
     """
     tests array class functions
