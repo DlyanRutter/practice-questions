@@ -1,6 +1,3 @@
-import numpy as np
-
-
 class Array(object):
     """
     used to manipulate arrays
@@ -69,10 +66,118 @@ class LinkedList(object):
             thing = thing.next
         print blank
 
+    def delete(self, key, first_only=False):
+        """
+        Deletes an element object from a linked list if the element object's
+        value = key. If first_only is set to True, only the first link found
+        with that value will be deleted, else, all elements with that value
+        will be deleted. Runtime complexity is O(n), memory is O(1)
+        """
+        current = self.head
+        if current.value == key:
+            self.head = current.next
+            
+        while current.next:
+            if current.next.value == key:
+                current.next = current.next.next
+                if first_only==True:
+                    return
+                else:
+                    continue
+            current = current.next
 
-def reverse_single_ll(ll):
+class NumericalLinked(object):
     """
-    Takes as input a linked list object composed of element objects e.g.
+    used to make numerical linked lists
+    """
+    def __init__(self, head=None):
+        self.head = head
+        
+    def is_okay(self, new):
+        """
+        used to append new element objects to numerical lists. Will only
+        accept elements that have numerical values either int or float
+        """
+        
+        if isinstance(new, Element)==True:
+            if isinstance(new.value,int)==True or\
+               isinstance(new.value,float)==True:
+                return True
+            else:
+                return" 'new' must be an Element object with type int or float"
+                              
+        else:
+            return " 'new' must be an Element object"
+        
+
+    def append(self, new, in_order=True):
+        """
+        used to append new element objects to numerical lists. Will only
+        accept elements that have numerical values either int or float
+        """
+
+        if self.is_okay(new) != True:
+            print self.is_okay(new)
+            return
+
+        #right now I'm trying to figure out how to add numbers so they
+        #are sorted
+        if new.value <= self.head:
+            current = self.head
+            self.head.next = current
+            self.head = new
+            self.head.next 
+        while new.value >= current
+        if self.head:
+            while current.next:
+                current = current.next
+            current.next = new
+        else:
+            self.head = new
+
+    def insertion_sort_helper(self, node):
+        if node == None:
+            return self.head
+
+        if self.is_okay(node) != True:
+            print self.is_okay(node)
+            return
+        
+        if self.head == None or node.value <= self.head.value:
+            node.next = self.head
+            return node
+        
+        current = self.head
+        while current.next != None and current.next.value < node.value:
+            current = current.next
+
+        node.next = current.next
+        current.next = node
+
+        return self.head
+
+    def insertion_sort(self):
+        sort = None
+        current = self.head
+
+        while current != None:
+            temp = current.next
+            sort = sorted_insert(sort, current)
+            current = temp
+        return sort
+    
+    def list_print(self):
+        """prints a linked list"""
+        thing = self.head
+        blank = []
+        while thing:
+            blank.append(thing.value)
+            thing = thing.next
+        print blank
+
+def reverse_single_ll(ll, printt=True):
+    """
+    Takes as input a single linked list object composed of element objects e.g.
     [[3, 21, 4], ['daf', 34], ['paf', 'fa', (65, 5)], ('saf', 'dasf', 23), Null]
     list_to_do points to the start of the remaining list following the head e.g.
     [['daf', 34], ['paf', 'fa', (65, 5)], ['saf', 'dasf', 23], [Null]]
@@ -82,73 +187,54 @@ def reverse_single_ll(ll):
     temp.next becomes head e.g. [[3,21,4], null], reversed_list becomes temp
     taking temp.next into consideration e.g. ['daf',34],[3,21,4][null]
     Runtime complexity is Linear, O(n). Memory complexity is constant, O(1)
+    setting printt to True will return a list representation of the reversed
+    linked list. Setting to False will return an element with property
+    "element.next"
     
     """
-    head = ll.head 
+    head = ll.head
+    reversed_list = []
     if head == None or head.next == None:
         return head
 
-    list_to_do = head.next 
-    reversed_list = head 
-    reversed_list.next = None
+    new_ll = LinkedList()
+    node_to_do = head.next 
+    reversed_list_end = head 
+    reversed_list_end.next = None
 
-    while list_to_do != None:
-        temp = list_to_do 
-        list_to_do = list_to_do.next                        
-        temp.next = reversed_list
-        reversed_list = temp
-    return reversed_list
+    while node_to_do != None:
+        temp = node_to_do 
+        node_to_do = node_to_do.next                        
+        temp.next = reversed_list_end
+        reversed_list_end = temp
+        
+    if printt == True:
+        while reversed_list_end.next:
+            reversed_list.append(reversed_list_end.value)
+            reversed_list_end = reversed_list_end.next
+        reversed_list.append(ll.head.value)   
+        print reversed_list
+        
+    return reversed_list_end
 
-def remove_duplicates(ll):
+def remove_ll_duplicates(linked):
     """
     remove objects with values that are already present in a linked list
+    runtime is O(n), memory is O(n) because you have to make the set AKA
+    hashtable
     """
-    head = ll.head
-    if head == None or head.next == None:
-        return head
+    if linked == None:
+        return linked
 
     exists = set()
-    exists.add(head.value)
-    current = head
+    exists.add(linked.head.value)
+    current = linked.head
     
     while current.next != None:
         
         if current.next.value in exists:
             current.next = current.next.next
         else:
-            exists.add((current.next.value))
+            exists.add(current.next.value)
             current = current.next
-
-   return current
-
-def test_Array():
-    """
-    tests array class functions
-    """
-    array = [1, 10, 20, 47, 59, 63, 77, 88, 99, 111]
-    key = 77
-    array = Array(array)
-    print array.binary_search(key)
-    
-def test_LinkedList():
-    """
-    tests LinkedList class functions
-    """
-    ll = LinkedList()
-
-    #a, b, c, d ARE EACH ONE INSTANCE OF ELEMENT CLASS
-    a = Element([3,21,4])
-    b = Element(['daf', 34])
-    c = Element(['paf', 'fa', (65, 5)])
-    d = Element(('saf','dasf',23))
-
-    #APPENDING INSTANCES ABC FROM CLASS ELEMENT TO A SINGLE LINKED LIST INSTANCE
-    q = [a,b,c,d]
-    for e in q:
-        ll.append(e)
-
-    x = reverse_single_ll(ll)
-    y = [x.value, x.next.value, x.next.next.value, x.next.next.next.value]
-    print y
-
-#test_LinkedList()
+    return linked
