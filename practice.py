@@ -238,3 +238,43 @@ def remove_ll_duplicates(linked):
             exists.add(current.next.value)
             current = current.next
     return linked
+
+def insertion_sort_helper(head, node):
+    """
+    Helper function for insertion_sort. Head is the head of the linked_list,
+    and node is the node to be inserted. Works by transferring values from
+    one list to a new one, placing them in order as they switch.
+    """
+    if node == None:
+        return head
+
+    if head == None or node.value <= head.value:
+        node.next = head
+        return node
+
+    current = head
+    while current.next != None and current.next.value < node.value:
+        current = current.next
+        
+    node.next = current.next
+    current.next = node
+    return head
+
+def insertion_sort(ll):
+    """
+    Main insertion sort function. Takes a linked list as input and outputs a
+    linked list sorted by numericall value (low to high). Works by first
+    initiating a new linked list with initial value of None. Then inserts
+    the current value into new linked list using helper function recursively.
+    Runtime is O(n^2), and memory is O(1)
+    """
+    head = ll.head
+    sorted = None
+    current = head
+    
+    while current != None:
+        temp = current.next
+        sorted = insertion_sort_helper(sorted, current)
+        current = temp
+        
+    return sorted
