@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class Array(object):
     """
     used to manipulate arrays
@@ -45,17 +48,45 @@ class LinkedList(object):
     used to set up linked lists
     """
     def __init__(self, head=None):
-        self.head = head
+         self.head = head
 
+        
     def append(self, new_element):
-        """adds element to end of a list"""
-        current = self.head
-        if self.head:
-            while current.next:
-                current = current.next
-            current.next = new_element
+         """adds element to end of a list"""
+         current = self.head
+         if self.head:
+             while current.next:
+                 current = current.next
+             current.next = new_element
+         else:
+             self.head = new_element
+          
+    def is_numerical(self, new):
+        """
+        used to append new element objects to numerical lists. Will only
+        accept elements that have numerical values either int or float
+        """
+        
+        if isinstance(new, Element)==True:
+            if isinstance(new.value,int)==True or\
+               isinstance(new.value,float)==True:
+                return True
+            else:
+                print" 'new' must be an Element object with type int or float"
+                              
         else:
-            self.head = new_element
+            print " 'new' must be an Element object"
+        return False
+
+    def append_number(self, new):
+        """
+        appends a number element to a link list composed exclusively of
+        numerical elements
+        """
+        if self.is_numerical(self,new) == True:
+            self.append(self, new)
+        else:
+            return
 
     def list_print(self):
         """prints a linked list"""
@@ -65,7 +96,7 @@ class LinkedList(object):
             blank.append(thing.value)
             thing = thing.next
         print blank
-
+    
     def delete(self, key, first_only=False):
         """
         Deletes an element object from a linked list if the element object's
@@ -86,94 +117,55 @@ class LinkedList(object):
                     continue
             current = current.next
 
-class NumericalLinked(object):
+def get_length(ll):
     """
-    used to make numerical linked lists
+    Gets the length of a linked list. Time complexity is O(n), and memory
+    complexity is O(1)
     """
-    def __init__(self, head=None):
-        self.head = head
-        
-    def is_okay(self, new):
-        """
-        used to append new element objects to numerical lists. Will only
-        accept elements that have numerical values either int or float
-        """
-        
-        if isinstance(new, Element)==True:
-            if isinstance(new.value,int)==True or\
-               isinstance(new.value,float)==True:
-                return True
-            else:
-                return" 'new' must be an Element object with type int or float"
-                              
-        else:
-            return " 'new' must be an Element object"
-        
+    list_length = 0
+    current = ll.head
+    while current != None:
+        current = current.next
+        list_length += 1
+    return list_length
 
-    def append(self, new, in_order=True):
-        """
-        used to append new element objects to numerical lists. Will only
-        accept elements that have numerical values either int or float
-        """
+def intersect(ll1, ll2):
+    """
+    Given two linked lists (self.ll and ll2), find out if they intersect
+    and return the value of intersection. Runtime complexity is O(m+n)
+    where m is the length of the self.ll and n is the length of ll2. Memory
+    complexity is O(1). Works by turning ll1 and ll2 into new lists, each
+    of the same size (new_ll1_start and new_ll2_start) and runs along them
+    both simultaneously comparing values. Must be the same value at the
+    same index to be considered an intersection.
+    """
+    new_ll1_start = None
+    new_ll2_start = None
 
-        if self.is_okay(new) != True:
-            print self.is_okay(new)
-            return
+    ll1_length = get_length(ll1)  
+    ll2_length = get_length(ll2)
+    difference = 0
 
-        #right now I'm trying to figure out how to add numbers so they
-        #are sorted
-        if new.value <= self.head:
-            current = self.head
-            self.head.next = current
-            self.head = new
-            self.head.next 
-        while new.value >= current
-        if self.head:
-            while current.next:
-                current = current.next
-            current.next = new
-        else:
-            self.head = new
+    if ll1_length >= ll2_length:
+        difference = ll1_length - ll2_length
+        new_ll1_start = ll1.head
+        new_ll2_start = ll2.head        
+    else:
+        difference = ll2_length - ll1_length
+        new_ll1_start = ll2.head
+        new_ll2_start = ll1.head
 
-    def insertion_sort_helper(self, node):
-        if node == None:
-            return self.head
-
-        if self.is_okay(node) != True:
-            print self.is_okay(node)
-            return
-        
-        if self.head == None or node.value <= self.head.value:
-            node.next = self.head
-            return node
-        
-        current = self.head
-        while current.next != None and current.next.value < node.value:
-            current = current.next
-
-        node.next = current.next
-        current.next = node
-
-        return self.head
-
-    def insertion_sort(self):
-        sort = None
-        current = self.head
-
-        while current != None:
-            temp = current.next
-            sort = sorted_insert(sort, current)
-            current = temp
-        return sort
+    while difference > 0:
+        new_ll1_start = new_ll1_start.next
+        difference-=1
     
-    def list_print(self):
-        """prints a linked list"""
-        thing = self.head
-        blank = []
-        while thing:
-            blank.append(thing.value)
-            thing = thing.next
-        print blank
+    while new_ll1_start != None:
+        if new_ll1_start.value == new_ll2_start.value:
+            return new_ll1_start.value        
+        new_ll1_start = new_ll1_start.next
+        new_ll2_start = new_ll2_start.next
+
+    return False
 
 def reverse_single_ll(ll, printt=True):
     """
@@ -278,3 +270,4 @@ def insertion_sort(ll):
         current = temp
         
     return sorted
+
