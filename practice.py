@@ -271,3 +271,90 @@ def insertion_sort(ll):
         
     return sorted
 
+def split_in_half(head, first_second):
+    """
+    Splits a linked list in half. head argument is the head of a ll, and
+    I'm pretty sure first_second is LinkedList with two elements
+    """
+    if head == None:
+        first_second.first = None
+        first_second.second = None
+        return
+
+    elif head.next == None:
+        first_second.first = head
+        first_second.second = None
+
+    else:
+        slow = head
+        fast = head.next
+
+        while fast != None:
+            fast = fast.next
+
+            if fast != None:
+                fast = fast.next
+                slow = slow.next
+                
+        first_second.first = head
+        first_second.second = slow.next
+        slow.next = None
+
+def merge_sorted_lists(first, second):
+    """
+    Merge sort helper function. Takes two separate Element objects
+    as arguments
+    """
+    if first == None:
+        return second
+    
+    if second == None:
+        return first
+
+    new_head = None
+    if first.value <= second.value:
+        new_head = first
+        first = first.next
+    else:
+        new_head = second
+        second = second.next
+
+    new_current = new_head
+    while first != None and second != None:       
+        temp = None
+        if first.value <= second.value:
+            temp = first
+            first = first.next
+        else:
+            temp = second
+            second = second.next
+
+        new_current.next = temp
+        new_current = temp
+
+    if first != None:
+        new_current.next = first
+    elif second != None:
+        new_current.next = second
+
+    return new_head
+        
+def merge_sort(head):
+    """
+    Used to sort a linked list. Works by splitting an input list into
+    two halves repeatedly until there are either 0 or 1 Element objects.
+    We then merge sorted linked lists and keep doing it until we have
+    a completely sorted linked list. Runtime complexity is O(nlog(n)).
+    Memory complexity is O(log(n))
+    """
+
+    if head == None or head.next == None:
+        return head
+
+    first_second = LinkedList((None,None))
+    split_in_half(head, first_second)
+
+    first_second.first = merge_sort(first_second.first)
+    first_second.second = merge_sort(first_second.second)
+
+    return merge_sorted_lists(first_second.first, first_second.second)
