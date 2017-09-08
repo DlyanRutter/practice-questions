@@ -443,3 +443,44 @@ def merge_sorted_ll(ll1,ll2):
         merged_tail.next = head2
         
     return merged_head
+
+ll1 = LinkedList()
+numll = LinkedList()
+numll2 = LinkedList()
+aaa = Element(14)
+bbb = Element(26)
+ccc = Element(90)
+ddd = Element(200)
+eee = Element(330)
+
+r = [aaa, bbb, ccc, ddd, eee]
+
+for o in r:
+    numll2.append(o)
+
+bb = Element(24)
+cc = Element(325)
+dd = Element(342)
+aa = Element(87)
+numll.append(bb)
+numll.append(aa)
+numll.append(cc)
+numll.append(dd)
+#numll.append(Element(325))
+#numll.append(Element(93))
+
+#a, b, c, d ARE EACH ONE INSTANCE OF ELEMENT CLASS
+a = Element((3,21,4))
+b = Element(('daf', 34))
+c = Element(('paf', 'fa', (65, 5)))
+d = Element(94)
+e = Element(('da1f', 34))
+f = Element((12, 23))
+g = Element(('paf', 'fa', (65, 5)))
+h = Element(('saf','dasf',23))
+
+#APPENDING INSTANCES ABC FROM CLASS ELEMENT TO A SINGLE LINKED LIST INSTANCE
+q = [a,b,c,d,e,f,g, h]
+for z in q:
+    ll1.append(z)
+visualize = []
