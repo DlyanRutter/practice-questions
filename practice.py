@@ -359,12 +359,13 @@ def merge_sort(head):
 
     return merge_sorted_lists(first_second.first, first_second.second)
 
-def merge_sorted_ll(head1, head2):
+def merge_sorted_ll_heads(head1, head2):
     """
     merges two linked lists which are already sorted. Works by iterating
     over both lists simultaneously and adding the lesser value to a
     new list. Runtime complexity is O(m + n) where m and n are lengths
-    of both linked lists. Memory is O(1)
+    of both linked lists. Memory is O(1). This one takes as input two
+    heads.
     """
     if head1 == None:
         return head2
@@ -399,3 +400,46 @@ def merge_sorted_ll(head1, head2):
     
     return mergedHead
 
+def merge_sorted_ll(ll1,ll2):
+    """
+    given two sorted linked lists, merge them. works by comparing 
+    head values one at a time. memory consumption is O(1). runtime
+    complexity is O(m + n) where m and n are the lengths of ll1 
+    and ll2 respectively. This one takes as input two linked lists
+    """
+    head1 = ll1.head
+    head2 = ll2.head    
+    
+    if head1 == None:
+        return head2
+    elif head2 == None:
+        return head1
+
+    merged_head = None
+    
+    if head1.value <= head2.value:
+        merged_head = head1
+        head1 = head1.next
+    else:
+        merged_head = head2
+        head2 = head2.next
+        
+    merged_tail = merged_head    
+    while head1 != None and head2 != None:       
+        temp = None
+        if head1.value <= head2.value:
+            temp = head1
+            head1 = head1.next
+        else:
+            temp = head2
+            head2 = head2.next
+
+        merged_tail.next = temp
+        merged_tail = temp
+    
+    if head1 != None:
+        merged_tail.next = head1 
+    else:
+        merged_tail.next = head2
+        
+    return merged_head
