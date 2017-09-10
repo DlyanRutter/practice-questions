@@ -230,47 +230,11 @@ class Binary(object):
                                  currentNode.rightChild.rightChild)
 
     def _delTwoChild(self, currentNode):
+        """
+        helper function for deleting nodes if there are two children already.
+        """
         pass
         
-    def add(self, val):
-        """
-        adds a node to a tree if a tree exists or starts a new tree otherwise.
-        takes as input a value to be added to the tree
-        """
-        if self.root == None:
-            self.root = Node(val)
-        else:
-            self._add(val, self.root)
-
-    def _add(self, val, node):
-        """
-        helper function for add.
-        """
-        if val < node.payload:
-            if node.left != None:
-                self._add(val, node.left)
-            else:
-                node.left = Node(val)                
-        else:
-            if node.right != None:
-                self._add(val, node.right)
-            else:
-                node.right = Node(val)
-
-    def find(self, value):
-        if self.root != None:
-            return self._find(value, self.root)
-        else:
-            return None
-
-    def _find(self, val, node):
-        if val == node.payload:
-            return node
-        elif val < node.payload and node.left != None:
-            self._find(val, node.left)
-        elif val > node.payload and node.right != None:
-            self._find(val, node.right)
-
     def delete_tree(self):
         self.root = None
 
@@ -283,5 +247,3 @@ class Binary(object):
             self._print_tree(node.left)
             print str(node.value) + ' '
             self._print_tree(node.right)
-
-
