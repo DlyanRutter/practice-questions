@@ -400,32 +400,30 @@ def merge_sorted_ll_heads(head1, head2):
     
     return mergedHead
 
-def merge_sorted_ll(ll1,ll2):
+def merge_sorted(ll1, ll2):
     """
-    given two sorted linked lists, merge them. works by comparing 
-    head values one at a time. memory consumption is O(1). runtime
-    complexity is O(m + n) where m and n are the lengths of ll1 
-    and ll2 respectively. This one takes as input two linked lists
+    merges two sorted linked lists. ll1 and ll2 are linked lists. runtime
+    complexity is O(m + n) where m and n are the lengths of the lists. Memory
+    complexity is O(1)
     """
     head1 = ll1.head
-    head2 = ll2.head    
-    
+    head2 = ll2.head
+
     if head1 == None:
         return head2
     elif head2 == None:
         return head1
 
     merged_head = None
-    
     if head1.value <= head2.value:
         merged_head = head1
         head1 = head1.next
     else:
         merged_head = head2
         head2 = head2.next
-        
-    merged_tail = merged_head    
-    while head1 != None and head2 != None:       
+
+    merged_tail = merged_head
+    while head1 != None and head2 != None:
         temp = None
         if head1.value <= head2.value:
             temp = head1
@@ -436,14 +434,15 @@ def merge_sorted_ll(ll1,ll2):
 
         merged_tail.next = temp
         merged_tail = temp
-    
-    if head1 != None:
-        merged_tail.next = head1 
-    else:
-        merged_tail.next = head2
-        
-    return merged_head
 
+    if head1 != None:
+        merged_tail.next = head1
+    elif head2 != None:
+        merged_tail.next = head2
+
+    return merged_head
+            
+        
 ll1 = LinkedList()
 numll = LinkedList()
 numll2 = LinkedList()
